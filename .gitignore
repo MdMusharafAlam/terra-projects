@@ -1,0 +1,19 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+
+# Variables
+*.tfvars
+*.tfvars.json
+
+# Plan files
+*.tfplan
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
