@@ -1,21 +1,25 @@
 resource "aws_security_group" "sg_terraform" {
-  name = "sg_terraform"
+  name        = "sg_terraform"
   description = "Security group for Terraform"
-  vpc_id = var.vpc_id
+  vpc_id      = var.vpc_id
 
-  ingress{
-    description = "Allow SSH"
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] 
+  ingress {
+    description = "SSH from trusted IP only"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = [var.allowed_ssh_cidr]
   }
 
   egress {
-    description = "Allow all outbound traffic"
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
+    description = "Allow outbound traffic"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "sg_terraform"
   }
 }

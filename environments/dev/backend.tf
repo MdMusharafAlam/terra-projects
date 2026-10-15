@@ -1,7 +1,9 @@
 terraform {
   backend "s3" {
-    bucket = "tf-prod-s3-bucket-13-july"
-    key = "terraform.tfstate"
-    region = "us-east-1"
+    bucket       = "musharaf-terraform-state-215514708499-2026"
+    key          = "dev/terraform.tfstate"
+    region       = "us-east-1"
+    encrypt      = true
+    use_lockfile = true
   }
 }

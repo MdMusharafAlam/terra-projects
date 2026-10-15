@@ -17,3 +17,6 @@ crash.log
 # IDE
 .vscode/
 .idea/
+# Local backend and AWS configuration files
+environments/dev/backend.tf.disabled
+s3-encryption.json
