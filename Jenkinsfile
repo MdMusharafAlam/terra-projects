@@ -21,10 +21,15 @@ pipeline {
         }
 
         stage('Initialize') {
-            steps {
-                bat 'terraform -chdir=environments/dev init -input=false -reconfigure'
-            }
+    steps {
+        withCredentials([[
+            $class: 'AmazonWebServicesCredentialsBinding',
+            credentialsId: 'aws-credentials'
+        ]]) {
+            bat 'terraform -chdir=environments/dev init -input=false -reconfigure'
         }
+    }
+}
 
         stage('Validate') {
             steps {
