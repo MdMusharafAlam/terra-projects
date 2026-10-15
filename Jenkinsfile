@@ -21,11 +21,13 @@ pipeline {
             }
         }
 
-        stage('Initialize') {
-            steps {
-                bat 'terraform -chdir=environments/dev init -backend=false -input=false'
-            }
-        }
+        
+stage('Initialize') {
+    steps {
+        bat 'terraform -chdir=aws-terraform-infra-project/environments/dev init -input=false -reconfigure'
+    }
+}
+
 
         stage('Validate') {
             steps {
