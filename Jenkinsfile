@@ -80,16 +80,30 @@ pipeline {
             }
         }
 
+        
+        
         stage('Plan Production') {
             steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
                     credentialsId: 'aws-credentials'
                 ]]) {
-                    bat 'terraform -chdir=environments/production plan -input=false -no-color'
+                    bat '''
+                        terraform -chdir=environments/production plan -input=false -no-color ^
+                        -var="aws_region=us-east-1" ^
+                        -var="ami_id=ami-08c982207dfbf2b27" ^
+                        -var="instance_type=t3.micro" ^
+                        -var="vpc_cidr_block=10.30.0.0/16" ^
+                        -var="subnet_cidr_block=10.30.1.0/24" ^
+                        -var="availability_zone=us-east-1a" ^
+                        -var="bucket_name=musharaf-terraform-prod-215514708499" ^
+                        -var="allowed_ssh_cidr=152.58.134.29/32"
+                    '''
                 }
             }
         }
+
+
     }
 
     post {
